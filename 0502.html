@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="description" content="DBAC Analysis" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="../default.css" title="style" />
+<style type="text/css"> <!--
+span.text { font-size: 75%; }
+span.hex { position: absolute; width: 1.25em; height: 1.25em; color: #000; background-color: transparent; background-size: cover; text-align: center; line-height: 1.25em; vertical-align: middle; }
+span.ul0 { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBvbHlnb24gcG9pbnRzPSIzMiAxNiAyNCAyOS44IDggMjkuOCAwIDE2IDcuOSAyLjEgMjQgMi4xIiBmaWxsPSIjZWVlZWVlIiBzdHJva2U9IiMzMzMzZmYiIC8+PC9zdmc+); }
+span.ula { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBvbHlnb24gcG9pbnRzPSIzMiAxNiAyNCAyOS44IDggMjkuOCAwIDE2IDcuOSAyLjEgMjQgMi4xIiBmaWxsPSIjZWVlZWVlIiBzdHJva2U9IiNjYzMzMzMiIC8+PC9zdmc+); }
+span.ulb { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBvbHlnb24gcG9pbnRzPSIzMiAxNiAyNCAyOS44IDggMjkuOCAwIDE2IDcuOSAyLjEgMjQgMi4xIiBmaWxsPSIjZWVlZWVlIiBzdHJva2U9IiMzMzk5MzMiIC8+PC9zdmc+); }
+span.hex:hover { color: #fff; background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBvbHlnb24gcG9pbnRzPSIzMiAxNiAyNCAyOS44IDggMjkuOCAwIDE2IDcuOSAyLjEgMjQgMi4xIiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiM2NjY2NjYiIC8+PC9zdmc+); }
+div.map { position: relative; float: right; width: 106px; height: 66px; }
+span.map { position: absolute; left: 0px; top: 0px; width: 106px; height: 66px; background-color: transparent; background-size: cover; }
+span.com { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATUSURBVHhe7ZpPSBRRHMc9duzYsWPHjh09dIiKWLpURBBREEEZ4f9FXUVEEYxCFFbQkBS9eNFDHvQmXQw9CIJIEoJBlmb//wjT9zv8RmZ3Z5bZmdlt3vr7wGPYme/83u+9/b3fezPzahRFURRFURRFURRFURRFURRFMZ3GxsbHTU1NGZTmjo6OE3K6gLh1QYnbnpGk0+n64eHhX7Ozs9bY2NghOiIrl3KIWxeUuO0ZSX19/alMJnOwu7tr7e3tWTz29fV9xPmzIrGJWxeUuO0ZC1JJ7cDAwD47wSkjIyMHzc3Nt5hmJN1kGhoaLkfRIXVdlypLAjYD+VdXV3dSbqleELGL8/Pz1urqqrW0tGQhtbxFeT46Ovqb6WZycvKwq6vrVRSdVBWKoPWKvHppaWk5097e/gYdssKCUXERDd930g1Lf3//PqL4Whhd1DQV1D+M2nNyS3XCtIEOWGQndHZ2vmZH9Pb2fnY6gWVoaOgzzt8Mo0NqOi1V5ZBfb1Bd1HqNBWkkOzMz85ephSlGGjszNzdnn1tYWLDY8Cg6qSqHKLoo9RoJ01J+dA4ODu4jOm+goUsovlFcig71XJAqbfzqDaoLW6+xsCO43HXne78Oi6JzdyznG/xOVUKX75/RMGXwQZIrqKmpqaIpKKyOhemIaYkrN/xer4ROXKoOOFk7zyMsfs8kYXWI6vNclTmRzuJM/uXU+flXMbhcbW1t/QFnLCyF/+JYK5dCEdReWB2WzVcR3UdvF1g4nzBNyi02+J3zFsLRwV4qiL18nZ9/FYOT5/Lysu3g+vp65AfKoPai6FAy2Wz2J9PS+Pj4ITQvRZ6Dly6oPS+dmK08iLoLnCTpjFMmJia+Y9jfF0lJBLUXVYfzDxHhzisf3zfgPO/Wwf6VIPb8dGH7pWTg0FkM4z9w5mjYI3I+7uzs2M5w+Pf09HyCQym3DkfPYR/WXty6SvnHNCymywtXM2tra3blW1tbFpai75GHW/Jf+3vpvKI2ir24dZXwT8zGDyOK0cYjSkEagQNfcf02IujoQxqiq2DYO7q47eFaP44vcHxWTPe//HPrvAIhFugohu83vtbv7u7+gorutLW1fdre3rad4XBGJB1Ad0pusaFDXjo06MZxspevKwusHE5vcLXCyukEKv8Ahx6xEWwMlqAH0GXklhzS6fS9PF33MbPnqYsdRFeKD2102inT09O/OJRx7a4cH4jcE7fOZHso55C6alnkVk+C6mIFEcER9W5zc9N22okwNOgmzjvp4RtWMQ/llhzYcLcOK6EnJtr7728TgoAc656j7Ma4czGXnrjO/QJFc7ajQ+e454DE2/P7kxMJnLdXVShP+cflr26chzimCGgyPBbTmWRPuiD5uLdFcT8AIvE5ylv3hMvIdD8vVJtOuiK5MDczR7MRbIyz5EREXkK08UneYkHjblezDqOv/EvsKBRLDyKxOW66RIKIWuGHMDrNNIGJdgPpwOs1y7HSJQ6sesr6XchUXdUj8x4/W3M/3GLUZ5Sk2zMWpJFYt08l3Z6RMK3wewxXU5wDWKLsJk26PWPBqqpgP5xsAEmJpCSSbs9okEoKdpPKpVAk3Z6xIGq5q+doNylWVZH2YifdnqIoiqIoiqIoiqIoiqIoiqIoiqIoSghqav4Bf1/Dy0hn7bUAAAAASUVORK5CYII=); }
+div.bar { height:1em; border:1px #333 solid; background-color:#ccc; }--> </style>
+<title>ダナカ (0502)</title>
+</head>
+<body>
+<div><a href="./index.html">DBAC</a> / <a href="./chronicle_statistics.html">クロニクルモード統計</a> / ダナカ (0502)</div>
+<hr />
+<div class="last_updated">Last updated on 2019-07-24</div>
+<div style="position: relative; width: 21.81em; height: 13.12em; background-color: transparent; ">
+<a href="#a1" title="ドフォアボーツ"><span class="hex ulb" style="top:6.25em; left:2.16em; "><span class="text">1</span></span></a>
+<a href="#a2" title="ペグニウィ"><span class="hex ulb" style="top:7.5em; left:2.16em; "><span class="text">2</span></span></a>
+<a href="#a3" title="ザウィーン"><span class="hex ulb" style="top:5.62em; left:3.24em; "><span class="text">3</span></span></a>
+<a href="#a4" title="トンモドエン"><span class="hex ulb" style="top:6.87em; left:3.24em; "><span class="text">4</span></span></a>
+<a href="#a5" title="オワシャ"><span class="hex ulb" style="top:5em; left:4.33em; "><span class="text">5</span></span></a>
+<a href="#a6" title="タオワ"><span class="hex ulb" style="top:7.5em; left:4.33em; "><span class="text">6</span></span></a>
+<a href="#a7" title="ナカタ"><span class="hex ulb" style="top:5.62em; left:5.41em; "><span class="text">7</span></span></a>
+<a href="#a8" title="ループカムス"><span class="hex ulb" style="top:6.87em; left:5.41em; "><span class="text">8</span></span></a>
+<a href="#a9" title="カガールリ"><span class="hex ulb" style="top:6.25em; left:6.49em; "><span class="text">9</span></span></a>
+<a href="#a10" title="チナーキ"><span class="hex ulb" style="top:7.5em; left:6.49em; "><span class="text">10</span></span></a>
+<a href="#a11" title="グントキスン"><span class="hex ulb" style="top:8.75em; left:6.49em; "><span class="text">11</span></span></a>
+<a href="#a12" title="グラーンビ"><span class="hex ulb" style="top:5.62em; left:7.57em; "><span class="text">12</span></span></a>
+<a href="#a13" title="ベクケ"><span class="hex ulb" style="top:6.87em; left:7.57em; "><span class="text">13</span></span></a>
+<a href="#a14" title="フルゲ"><span class="hex ulb" style="top:2.5em; left:8.66em; "><span class="text">14</span></span></a>
+<a href="#a15" title="ウロケナ"><span class="hex ulb" style="top:3.75em; left:8.66em; "><span class="text">15</span></span></a>
+<a href="#a16" title="アサーニ"><span class="hex ulb" style="top:5em; left:8.66em; "><span class="text">16</span></span></a>
+<a href="#a17" title="ネグサ"><span class="hex ulb" style="top:7.5em; left:8.66em; "><span class="text">17</span></span></a>
+<a href="#a18" title="サートゥスンカ"><span class="hex ulb" style="top:3.12em; left:9.74em; "><span class="text">18</span></span></a>
+<a href="#a19" title="サバドリー"><span class="hex ulb" style="top:5.62em; left:9.74em; "><span class="text">19</span></span></a>
+<a href="#a20" title="ダーイベンサ"><span class="hex ulb" style="top:6.87em; left:9.74em; "><span class="text">20</span></span></a>
+<a href="#a21" title="ブルックシェル"><span class="hex ulb" style="top:2.5em; left:10.82em; "><span class="text">21</span></span></a>
+<a href="#a22" title="ムジェロー"><span class="hex ulb" style="top:3.75em; left:10.82em; "><span class="text">22</span></span></a>
+<a href="#a23" title="シャーゲート"><span class="hex ulb" style="top:5em; left:10.82em; "><span class="text">23</span></span></a>
+<a href="#a24" title="スーセントリマー"><span class="hex ulb" style="top:6.25em; left:10.82em; "><span class="text">24</span></span></a>
+<a href="#a25" title="サントセキャリンズ"><span class="hex ulb" style="top:7.5em; left:10.82em; "><span class="text">25</span></span></a>
+<a href="#a26" title="ジョンズトセン"><span class="hex ulb" style="top:8.75em; left:10.82em; "><span class="text">26</span></span></a>
+<a href="#a27" title="ワリチク"><span class="hex ulb" style="top:3.12em; left:11.9em; "><span class="text">27</span></span></a>
+<a href="#a28" title="ビドンモルラ"><span class="hex ulb" style="top:5.62em; left:11.9em; "><span class="text">28</span></span></a>
+<a href="#a29" title="ワエロトヴィリール"><span class="hex ulb" style="top:6.87em; left:11.9em; "><span class="text">29</span></span></a>
+<a href="#a30" title="トントロ"><span class="hex ulb" style="top:2.5em; left:12.99em; "><span class="text">30</span></span></a>
+<a href="#a31" title="ナモナイ"><span class="hex ulb" style="top:3.75em; left:12.99em; "><span class="text">31</span></span></a>
+<a href="#a32" title="スベーイノ"><span class="hex ulb" style="top:5em; left:12.99em; "><span class="text">32</span></span></a>
+<a href="#a33" title="ハルミトン"><span class="hex ulb" style="top:7.5em; left:12.99em; "><span class="text">33</span></span></a>
+<a href="#a34" title="リーバ"><span class="hex ulb" style="top:4.37em; left:14.07em; "><span class="text">34</span></span></a>
+<a href="#a35" title="クスハリファ"><span class="hex ulb" style="top:5.62em; left:14.07em; "><span class="text">35</span></span></a>
+<a href="#a36" title="バークンバー"><span class="hex ulb" style="top:6.87em; left:14.07em; "><span class="text">36</span></span></a>
+<a href="#a37" title="ボピーロータ"><span class="hex ulb" style="top:3.75em; left:15.15em; "><span class="text">37</span></span></a>
+<a href="#a38" title="ビリクトア"><span class="hex ulb" style="top:6.25em; left:15.15em; "><span class="text">38</span></span></a>
+<a href="#a39" title="フォドラトブーン"><span class="hex ulb" style="top:7.5em; left:15.15em; "><span class="text">39</span></span></a>
+<a href="#a40" title="ジンジョープリス"><span class="hex ulb" style="top:8.75em; left:15.15em; "><span class="text">40</span></span></a>
+<a href="#a41" title="レデンリフトク"><span class="hex ulb" style="top:4.37em; left:16.23em; "><span class="text">41</span></span></a>
+<a href="#a42" title="ルルベビ"><span class="hex ulb" style="top:5.62em; left:16.23em; "><span class="text">42</span></span></a>
+<a href="#a43" title="ホックイロトワ"><span class="hex ulb" style="top:2.5em; left:17.32em; "><span class="text">43</span></span></a>
+<a href="#a44" title="トハメンシディ"><span class="hex ulb" style="top:3.75em; left:17.32em; "><span class="text">44</span></span></a>
+<a href="#a45" title="クンモント"><span class="hex ulb" style="top:5em; left:17.32em; "><span class="text">45</span></span></a>
+<a href="#a46" title="リモーンオルト"><span class="hex ulb" style="top:3.12em; left:18.4em; "><span class="text">46</span></span></a>
+<a href="#a47" title="レナジャイ"><span class="hex ulb" style="top:4.37em; left:18.4em; "><span class="text">47</span></span></a>
+<a href="#a48" title="スブレジリ"><span class="hex ulb" style="top:5.62em; left:18.4em; "><span class="text">48</span></span></a>
+<a href="#a49" title="ディアレッド"><span class="hex ulb" style="top:3.75em; left:19.48em; "><span class="text">49</span></span></a>
+<a href="#a50" title="ンドンロ"><span class="hex ulb" style="top:5em; left:19.48em; "><span class="text">50</span></span></a>
+</div>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADQSURBVHhe7dYxSgNBFADQLS29ScyG3UwRyJam8wIbSJNO8AZTJRBB67TewdPYWQlaKJrCbs3CGHKAQKZ4D4aB/3/3+X+mAAAAAAAAAAAAAAAAAE4mVtVVHI2a/k4hchOHw+vNeLzbTiafDyF8r+u6TSlyEafTi/sQXt7atuuWy+5nsej2TXuPg8FlKiEH+3V389Q0X32T/s/zbPYby/IulZCDfqI2df36MZ+bqNwdv1GPIexWVXWbUuTm8Osry5BCAAAAAAAAAAAAAADA2RTFH4RLQirlDxh9AAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a1">ドフォアボーツ (1)</a><br />
+１クレジット限定　★★★★★★★　難易度‐難関‐<br />
+セカンド(ウェーブ0,ツイン4,アーム6)<br />
+レジェンド(レーザー4,マルチ4,アーム6)<br />
+209,392,000 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2014-11-06 16:06:57)<br />
+<a href="unlock_b.html#s54">KNIGHT FOSSIL > HYPER JAW > INSANE STARE > ANCIENT BARRAGE > THOUSAND EDGE</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dSvTgNBEAfgk0gkj4Br2rvm6npJ0wTTB6ioqGiDROCXPwaQ1RVIHI/AI+AxSBIMIQQCqVi2ZHkAUCe+L9lMsr9xk5kCAAAAAAAAAAAAAAAAAACAPwi93lEoy5NtzV+0zXlVHV83zefdZBJvRqOvi7pe5Yi2CJ3O7mVdP7/N5zEul3GzWMQ0qNfQ7+/lFtogdLsH66Z52Q7p992Ox+/pDB7mFtoibdD943T6M6Sn2SxeDQYPYTjcyTFtkbZn/6yqPlKNp2W5SbXJEQAAAAAAAAAAAPBfRfENedM+/wTnohUAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a2">ペグニウィ (2)</a><br />
+装備固定　★★★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム9)<br />
+198,011,700 (ARUKAS,ネクスト,<a href="locations.html#l167910391">タイトーステーション梅三小路店</a>,2017-09-17 22:49:06)<br />
+<a href="unlock_b.html#s67">L派生・柱間ハンペン弱 > HEAVY GLUTTONS > 海底都市[茶]・上下回転砲台 > G.T.V</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADUSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZAoOgOTiPWm0xZ9utKPJAAAAAAAAAAAAAAAA/mhCuNrl+VdTFOm2KM7dWw0RY3KI8fVttUppu03tep32Mb43i8XFEDMGzWRy/VxVbT+k33pZLk9Nnt8MLYxB/3PuY/w4bTY/QzrXdTpMp8duHV4OLYzFXQj1Q1l+Ps3n7eNsdtyHsBsixqZbdWV/RDgkAAAAAAAAAAAAAAAAgH+XZd/4qz2xvGtWWQAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a3">ザウィーン (3)</a><br />
+防御力上昇　★★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,マルチ4,アーム3)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム3)<br />
+207,805,400 (OAMNAOKI,フォーミュラ,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2019-02-24 19:47:50)<br />
+<a href="unlock_b.html#s67">L派生・柱間ハンペン弱 > HEAVY GLUTTONS > 海底都市[茶]・上下回転砲台 > G.T.V</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADSSURBVHhe7dahTgNBEAbgkzwCr9Fr9u5Ek55pgsRUVjRNGgzPsEFAAwJdwTvwRtgaSAUlCMRySxaHRJz4vmSyyc64yZ9MBQAAAAAAAAAAAAAAAADwv2Jdd3E67fNbvhibYUGX92172s9mx8euO92GcF1ajEWcz8/umubtfb1OabtNn5tNemjb1xjCeRlhDOJkcvHU98e8pN96Xiw+hpRdlRHGYhfCy2G1+llSTlZOWE5aaTMW+YC4qeuvIUUp165plqUFAAAAAAAAAAAAAPCnqvoGxmE9tWhaaAwAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a4">トンモドエン (4)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+セカンド(ミサイル0,シングル0,アーム0)<br />
+ネクスト(ミサイル2,シングル0,アーム0)<br />
+192,779,500 (KU@AKIBA,ネクスト,<a href="locations.html#l167918618">高田馬場ゲーセンミカド</a>,2014-07-29 19:11:20)<br />
+<a href="unlock_0.html#s6">A道中 > E道中 > ANCIENT BARRAGE > 宇宙要塞[紫]・中型艦多 > VIOLENT RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dQvTgNBFAfglRyBI2Db3e2mqps0TTDVVVVNGyQCgRv+iAYMniCwKI6A5BAkWAwEBW1SkmFLhgPUrfi+5OUl83vu5U0GAAAAAAAAAAAAAOwq5PnBRVF8Nz2e5/mm6XWKaJOrqnp+mUxiXCzi23Qal2X5miLaInQ6h3d1/bld0n89jkZfzVUdpRHaIJTl/nVVva9ms78lbebzeNPvf2y/wzRCW1wWxcl9Xa+fxuP4MBz+LHu92xTRNqHbPW6u6Kyp0zAY7KVnAAAAAAAAAAAAAAAAAAB2lGW/hco/MI1HPEkAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a5">オワシャ (5)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+外伝(ミサイル0,シングル0,アーム0)<br />
+フォーミュラ(ミサイル0,シングル0,アーム0)<br />
+305,304,700 (STT,外伝,<a href="locations.html#l167918618">高田馬場ゲーセンミカド</a>,2016-09-22 14:26:59)<br />
+<a href="unlock_0.html#s24">C道中 > F道中 > MIRAGE CASTLE > 小惑星地帯[緑] > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dSvTgNBEAfgk0gkj4Br2rvm6npJ0wTTB6ioqGiDROCXPwaQ1RVIHI/AI+AxSBIMIQQCqVi2ZDF4khPfl2wm2d+4yUwBAAAAAAAAAAAAAAAAAADAPwi93lEoy5NtzV+0zXlVHV83zefdZBJvRqOvi7pe5Yi2CJ3O7mVdP7/N5zEul3GzWMQ0qNfQ7+/lFtogdLsH66Z52Q7p992Ox+/pDB7mFtoibdD943T6M6Sn2SxeDQYPYTjcyTFtkbZn/6yqPlKNp2W5SbXJEQAAAAAAAAAAAPBXUXwDoY0+/1Jir9kAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a6">タオワ (6)</a><br />
+装備固定　★★★★★★　難易度‐普通‐<br />
+外伝(ウェーブ3,マルチ4,アーム6)<br />
+セカンド(ウェーブ4,マルチ4,アーム6)<br />
+155,204,000 (ASC,外伝,<a href="locations.html#l167910405">アムネット五反田２号店</a>,2012-12-20 10:33:25)<br />
+<a href="unlock_b.html#s5">BRIGHTLY STARE > SLASH SHELL > TRIDENT JAW</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZC6QysV70miLP91oR5MBAAAAAAAAAAAAAABcpAnhZpfnP01RpPuiOHdvNUSMySHG94/VKqXtNrXrddrH+NksFldDzBg0k8nta1W1/ZD+6225PDV5fje0MAb9z3mM8eu02fwN6VzX6TCdHrt1eD20MBYPIdRPZfn9Mp+3z7PZcR/CbogYm27Vlf0R4ZAAAAAAAAAAAAAAAAAALpZlv1SkPbHG3k6XAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a7">ナカタ (7)</a><br />
+装備固定　★★★★★★　難易度‐普通‐<br />
+アサルト(レーザー4,マルチ4,アーム4)<br />
+ネクスト(ウェーブ4,ツイン4,アーム6)<br />
+309,492,150 (TAITO,アサルト,<a href="locations.html#l167910997">Ｈｅｙ</a>,2015-04-17 13:27:27)<br />
+<a href="unlock_b.html#s124">洞窟地帯[水]２・左右から編隊 > GLASSY STARE > U道中 > MASSIVE WHIP > 通路・斜めブロック高速 > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADRSURBVHhe7dYxSgNBFAbgLT2C18iG2d0ikG0CljYpU4RAsPEMg4UGLaxTeAdvZJtGSWHEwmLdkfEMDvh98BiY97rHD68CAAAAAAAAAAAAAAAAAPgbsa67OJ326c1flGZc0OV92572s9nxsetOtyFc5xaliPP52V3TvL2v18Ow3Q6fm83w0LavMYTzPEIJ4mRy8dT3x7Sk33peLD7GlF3lEUqxC+HlsFr9LCklKyUsJS23KUU6IG7q+mtM0ZBq1zTL3AIAAAAAAAAAAAAA/pmq+gYhuj21ChYZgAAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a8">ループカムス (8)</a><br />
+攻撃力上昇　★★★★★★★　難易度‐難関‐<br />
+セカンド(ミサイル0,ツイン4,アーム4)<br />
+ネクスト(ミサイル0,ツイン4,アーム4)<br />
+266,733,580 (OAMNAOKI,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2015-03-21 21:28:46)<br />
+<a href="unlock_a.html#s16">D派生・斜め移動 > LIGHTNING CLAW > G派生・デブリ多 > ASSAULT JAW > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADPSURBVHhe7daxSgNBEADQKy39kyQX7rJFIFcmnT9wgTTpAv7BVgoRtLb1H/I1dlZCUiRoCrszB6tYWm7xHiwLM9MNM7sFAAAAAAAAAAAAAAAAkK1YVcM4Hjf9nULkJo5G8+1kcn6eTo+PIXzc13WbUuQizmZXDyG8vrdt163X3edq1V2ato+DwXUqIQeXdXfz0jSnvkk/Z7dYfMWyvE0l5KCfqG1dvx2WSxOVu79v1FMI57uq2qQUufn99ZVlSCEAAAAAAAAAAAAAAODfiuIb1kBCKub3PEkAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a9">カガールリ (9)</a><br />
+バースト強化　★★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム4)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+182,036,100 (..X,ネクスト,<a href="locations.html#l167911342">Ｒ４０８</a>,2013-04-28 22:11:16)<br />
+<a href="unlock_b.html#s68">L派生・観覧車弱 > BRUTE GLUTTONS > 海底都市[茶]・途中からＫ道中 > VIOLENT RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dS/SgNBEAfgKy0tfQS7kNyFS5eDELDJA6RIkSLB0sJ+/dOoZeoUlnY+go9gb2Mp2IiIoqRYN7I+gwd+HywD+5tumCkAAAAAAAAAAAAAAAAAAAD4Q6HXOwplebKt+Yu2Oa+q4+um+bybTOLNaPR1UderHNEWodPZvazr57f5PMblMm4Wi5gG9Rr6/b3cQhuEbvdg3TQv2yH9vtvx+D2dwcPcQlukDbp/nE5/hvQ0m8WrweAhDIc7OaYt0vbsn1XVR6rxtCw3qTY5AgAAAAAAAAAAgP+jKL4ByUc+/6X1IZ8AAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a10">チナーキ (10)</a><br />
+装備固定　★★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム4)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+321,285,470 (HIK,ネクスト,<a href="locations.html#l167911232">ポート２４御津</a>,2014-07-17 23:13:17)<br />
+<a href="unlock_0.html#s79">サルガッソー[灰] > LIGHTNING PRISON > D派生・斜め移動 > SLASH SHELL > H派生・長 > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADVSURBVHhe7dYxTkJBEADQfwRLS0o6DAS+PzT0hCAlB4Br/FKttLCi8wL2NiYUhILCI3gCAz3FuovrEUy2eC+ZbCYz3WR3pwIAAAAAAAAAAAAAAAAAAAAAAP5N2+tdPdT1R4zPdKY8lyjJ/Wi0eZ9Oz1/LZdjP5yENK5coRTsYdJ+a5vu8WoWwXl/iZTw+tv3+bW6hBO1wePPcNKe/IaV4nUxOcYB3uYVSPNb123Y2uzx9h8UixHyfS5Qk3qrr+E/t0jKRhhSXiU4uAQAAAAAAAPCrqn4A3QxAi7s6Z+AAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a11">グントキスン (11)</a><br />
+１クレジット限定　★★★★★★★★　難易度‐難関‐<br />
+ネクスト(レーザー4,マルチ4,アーム7)<br />
+レジェンド(ミサイル4,マルチ4,アーム6)<br />
+234,098,000 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2014-11-06 12:06:44)<br />
+<a href="unlock_b.html#s62">LIGHTNING FLAMBERGE > PHANTOM CASTLE > HEAVY JAW > DARK FLAME</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADUSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZCpqJBfvSaMt/nSjHU0GAAAAAAAAAAAAAADwr5oQrnZ5/tUURbotinP3VkPEmBxifH1brVLablO7Xqd9jO/NYnExxIxBM5lcP1dV2w/pt16Wy1OT5zdDC2PQ/5z7GD9Om83PkM51nQ7T6bFbh5dDC2NxF0L9UJafT/N5+zibHfch7IaIselWXdkfEQ4JAAAAAAAAAAAAAAAA4I8s+wawjj2xpCjljgAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a12">グラーンビ (12)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+フォーミュラ(レーザー0,シングル0,アーム0)<br />
+レジェンド(ミサイル0,ツイン0,アーム0)<br />
+227,022,800 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2014-10-06 18:48:34)<br />
+<a href="unlock_0.html#s9">A道中 > KNIGHT FOSSIL > E派生・弱 > LIGHTNING PRISON > K道中 > DARK HELIOS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADQSURBVHhe7dYxSgNBFAbgLT2C18iG2d0ikG0CljaWKUIg2HiGwUKDFtYW3sEb2dooKYxYWIw7Mt5hkO+Dx8C81z1+eA0AAAAAAAAAAAAAAAAAQN1i2w5xPh/zW76ozbSg87u+Pz4uFoeHYTjehHBVWtQiLpcnt133/rHZpLTbpa/tNt33/VsM4bSMUIM4m509jeMhL+mvnlerzylll2WEWuxDeHldr3+XlJOVE5aTVtrUIh8Q1237PaUo5dp33UVpAQAAAAAAAAAAAAD/RNP8AH0EPbUC5lJZAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a13">ベクケ (13)</a><br />
+防御力上昇　★★★★★★　難易度‐普通‐<br />
+レジェンド(ウェーブ4,マルチ4,アーム3)<br />
+ネクスト(レーザー4,マルチ4,アーム4)<br />
+274,489,200 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2016-01-24 18:51:44)<br />
+<a href="unlock_b.html#s72">MIRAGE CASTLE > SLASH SHELL > K道中 > TRIDENT JAW > THOUSAND BULLETS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADYSURBVHhe7dUxSkNBEADQX3oEj2Apyf9JkUB+SB1SBcwBktrCwm4Fi9jaiZWV4CW0tBILe72AIOkEhXU/rHfYwHswLMxMN8xsBQAAAAAA7LvQ652Gfv8ixXmYTA5ympJc1vXZXdt+P83n8WE2+90OBre5RClC0xxeDYe7n/U6xs0mdu/1aPSZ8se5hRKkU9fejMdf3ZD+43463YW6PsktlCJt1OPzYhE/Vqv4tlzGbdO85xIlSVt1lP6llzSw1y6cPQAAAAAAAAAAAAAAAAAAAAAAAGDfVNUfEss+JfnYZ50AAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a14">フルゲ (14)</a><br />
+ノーミス限定　★★★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(ウェーブ4,ツイン4,アーム7)<br />
+レジェンド(レーザー4,マルチ4,アーム6)<br />
+201,147,500 (NAM,レジェンド,<a href="locations.html#l167918711">カレッジ・スクエア</a>,2015-09-17 22:55:03)<br />
+<a href="unlock_0.html#s6">A道中 > E道中 > ANCIENT BARRAGE > 宇宙要塞[紫]・中型艦多 > VIOLENT RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVHhe7daxqQJBFAXQLeGXYAd+EV3ERDBZEDG2AG1jzdRMU7EBYyMTDQ0twQYEzRXGXVitYZBz4AaPO9mDxyQAAAAAAAAAAMQtr9f/Fml6LHJZpum5mGtVRUzm7fbmMBg8r+NxOI9GoVxaVRGLvNX6X3U6jzCdhk+2vd49bzSy6gkxKBe17nZvz8nEomJXnr5dv/86DYdhn2VOX6zKz0TebM6+KeaqAgAAAAAAAAAAAAAAAAAAAIAfkCRvFMU+5VLfH+wAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a15">ウロケナ (15)</a><br />
+装備固定　★★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(レーザー4,マルチ4,アーム4)<br />
+ネクスト(ウェーブ4,ツイン4,アーム6)<br />
+210,269,250 (OAMNAOKI,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2015-04-27 12:25:49)<br />
+<a href="unlock_b.html#s127">海底都市[緑]・下側回転砲台 > THOUSAND EDGE > 宇宙要塞[紫]・並列ハンペン > DARK HELIOS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dS7SgNREAbgLX0EH8E22d0sqbIQAmlSp0oVEiwtLOyOlyJok14sbK18BEsfQrC1Uay8QITjRo7P4CLfB8PA+acb5mQAAAAAAAAAAAAAwF8Leb53WhTvTY8neb5pep0i2uS8qu4fptMYl8v4NJvFVVk+poi2CJ3O+KquX7dL+q3b0eituar9NEIbhLLcvaiq54/5/GdJm8Uirvv9l+13mEZoi7OiOLyu68+7ySTeDIdfq17vMkW0Teh2D5orOm7qKAwGO+kZAAAAAAAAAAAAAAAAAODfy7Jvxe4/MEwYdH4AAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a16">アサーニ (16)</a><br />
+３人限定　★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,ツイン4,アーム7)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+317,818,172 (81 FO SK,外伝,<a href="locations.html#l167910414">タイトーステーション横浜店</a>,2015-02-15 20:01:38)<br />
+<a href="unlock_b.html#s72">MIRAGE CASTLE > SLASH SHELL > K道中 > TRIDENT JAW > THOUSAND BULLETS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADdSURBVHhe7dS/SgNBEAfgKy0tfQS7kNyFS5eDELDJA6RIkSLB0iL9+qdRS2sLSzsfwUewt7EUbEREUVJsNrK+wwW+D5aB/U03zBQAAAAAAAAAAAAAAAAAAADsgNDrnYSyPN3W/EXbXFTV6q5pfh4nk3g/Gv1e1vVNjmiL0OnsX9X12+d8HuNyGdeLRUyD+gj9/kFuoQ1Ct3t02zTv2yH9v4fx+CudwePcQlukDXp6mU7/hvQ6m8XrweA5DId7OaYt0vYcnlfVd6rxrCzXqTY5AgAAAAAAAAAAgN1XFBvxAT7/k1i+oAAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a17">ネグサ (17)</a><br />
+装備固定　★★★★★★　難易度‐普通‐<br />
+セカンド(ウェーブ4,マルチ4,アーム3)<br />
+ネクスト(ウェーブ4,シングル4,アーム3)<br />
+142,402,750 (WHM,セカンド,<a href="locations.html#l167911232">ポート２４御津</a>,2013-08-18 09:54:55)<br />
+<a href="unlock_0.html#s93">小惑星地帯[青]・弱 > THORN WHEEL > D道中 > THOUSAND BULLETS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADdSURBVHhe7dUxSgNBFAbgLS0tLb1BJCGZDSkSCKRbMGUOkJzBbu3U2Ih4ATsrwc5OLMTCwiN4hKSVCOtsGO8wwvfBK4b/dY/3pgAAAAAAAAD49+rx+KDu9c5ine+r0zlMETm5DOH2YTr9fqmq5mk2+1mH8JwichG35/i6LDe75bJpVqt93Y1Gm7rbLVMLOaj7/ZOb4XD7N6S27ieTbTyBp6mFXFyF8PhaVbuvxaL5mM+b+H5PETmJW3V0MRi8xb/qsx1Sew5TBAAAAAAAAAAAAAAAAAAAAAAA5K4ofgEduz76sh7kXQAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a18">サートゥスンカ (18)</a><br />
+装備固定　★★★★　難易度‐普通‐<br />
+外伝(ウェーブ3,マルチ4,アーム3)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム4)<br />
+153,148,400 (STT,外伝,<a href="locations.html#l167918618">高田馬場ゲーセンミカド</a>,2018-08-22 21:21:58)<br />
+<a href="unlock_0.html#s105">晴れ・ウニ少 > MUD WHEEL > 洞窟地帯[水]・下移動短 > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIKSm4AQfiABRUyArpSLHYyNzBEu9Joy3+dKMdTQYAAAAAAAAAAAAAADAKTQg3uzz/booi3RfFpXurIWJMDjG+va9WKW23qV2v0z7Gj2axuBpixqCZTG5fqqrth/RXr8vlucnzu6GFMeh/zmOMn+fN5ndIl7pOh+n01K3D66GFsXgIoX4qy6/n+bw9zmanfQi7IWJsulVX9keEQwIAAAAAAAAAAAAAAAD+kSz7AQyHPbGS6hqNAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a19">サバドリー (19)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+セカンド(ミサイル3,シングル3,アーム4)<br />
+レジェンド(ミサイル0,シングル0,アーム3)<br />
+226,319,000 (WHM,セカンド,<a href="locations.html#l167911113">ポート２４幸田店</a>,2014-05-31 14:18:39)<br />
+<a href="unlock_a.html#s5">C道中 > KING FOSSIL > G派生・弱 > LIGHTNING PRISON > I道中 > THOUSAND EDGE</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADQSURBVHhe7dYxSgNBFAbgLT2C18iG2d0ikG0CljaWKUIg2HiGwUKDFtYW3sEb2dooKYxYWIw7Mt5hkO+Dx8C81z1+eA0AAAAAAAAAAAAAAAAAwP8Q23aI8/mY3/JFbaYFnd/1/fFxsTg8DMPxJoSr0qIWcbk8ue2694/NJqXdLn1tt+m+799iCKdlhBrE2ezsaRwPeUl/9bxafU4puywj1GIfwsvrev27pJysnLCctNKmFvmAuG7b7ylFKde+6y5KCwAAAAAAAAAAAACoXNP8ANhOPbV5ff9OAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a20">ダーイベンサ (20)</a><br />
+攻撃力上昇　★★★★★★★★　難易度‐難関‐<br />
+セカンド(ミサイル0,ツイン4,アーム4)<br />
+ネクスト(ミサイル0,ツイン4,アーム4)<br />
+227,195,010 (OAMNAOKI,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2015-03-29 18:28:25)<br />
+<a href="unlock_b.html#s104">ワープ・開始時蛇二匹 > D派生・途中反転 > SLASH SHELL > G派生・デブリ多 > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADYSURBVHhe7dUxSkNBEADQX3oEj2Apyf9JkUB+SB1SBcwBktrCwm4Fi6S1EysrwUtoaSUW9noBQdIJCut+WO+w4HswLMxMN8xsBQAAAAAA/Beh1zsN/f5FivMwmRzkNCW5rOuz27b9epzP4/1s9rMdDG5yiVKEpjncDYf77/U6xs0mdu/VaPSR8se5hRKkU9dej8ef3ZD+4m463Ye6PsktlCJt1MPTYhHfV6v4ulzGbdO85RIlSVt1lP6l5zSwly6cPQAAAAAAAAAAAAAAAAAAAAAAAKAUVfULXJU+JRRwdxwAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a21">ブルックシェル (21)</a><br />
+装備固定　★★★★★★★★★★　難易度‐極悪‐<br />
+レジェンド(ウェーブ4,シングル4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム9)<br />
+245,506,150 (HIK,レジェンド,<a href="locations.html#l167911232">ポート２４御津</a>,2016-06-18 22:27:05)<br />
+<a href="unlock_b.html#s107">宇宙要塞[緑] > THOUSAND BULLETS > 海底都市[紫]・凹みに砲台 > G.T.V</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVHhe7daxqQJBFAXQLeGXYAd+EV3ERDBZEDG2AG1jzdRMU7EBYyMTDQ0twQYEzRXGXVitYZBz4AaPO9mDxyQAAAAAAAAAAPyGvF7/W6TpschlmabnYq5VFTGZt9ubw2DwvI7H4TwahXJpVUUs8lbrf9XpPMJ0Gj7Z9nr3vNHIqifEoFzUutu9PScTi4pdefp2/f7rNByGfZY5fbEqPxN5szn7ppirCgAAAAAAAAAAAAAAAAAAAAAiliRvQI8+5cFvou0AAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a22">ムジェロー (22)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+外伝(レーザー2,ツイン4,アーム3)<br />
+ネクスト(ミサイル4,ツイン4,アーム4)<br />
+269,291,650 (NON,ネクスト,<a href="locations.html#l167910532">ワンダータワー京都店</a>,2013-12-22 12:57:36)<br />
+<a href="unlock_a.html#s77">洞窟地帯[水]・地形無し > KNIGHT FOSSIL > 洞窟地帯[茶]・中型艦多 > LIGHTNING PRISON > 海底基地・長 > THOUSAND BULLETS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dQ/SgNBFAfgLT2CR7BNdjdLqiyEgE3qVKlCgqWFhd36pwja2IuFrZVHsPQQgq2NYqUJRBgnMt5hA98Hjwfze93jTQYAAAAAAAAAAAAA7Iomzw8uiuI79nCe55vY6xTRJldV9fwymYSwWIS36TQsy/I1RbRF0+kc3tX153ZJ//U4Gn3FqzpKI7RBU5b711X1vprN/pa0mc/DTb//sf0O0whtcVkUJ/d1vX4aj8PDcPiz7PVuU0TbNN3ucbyis1inzWCwl54BAAAAAAAAAAAAAAAAAHZWlv0C5gA/MKzEDGQAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a23">シャーゲート (23)</a><br />
+４人限定　★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,ツイン4,アーム7)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+207,361,553 (NZASNASR,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2015-10-11 17:41:58)<br />
+<a href="unlock_a.html#s18">D道中 > ANCIENT BARRAGE > G派生・デブリ多 > DISASTER JAW > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADPSURBVHhe7dYxSgNBFADQLS1zk5gNu5kikC1N5wU2kCad4A2mihDB1Gm9g6exsxK0UDSF3ZqFMeQIQ3wPhoH/f/f5f6YAAAAAAAAAAAAAAAAA/o1YVZdxPG76O4XITRyNrjaTyX43nX48hPB1V9dtSpGLOJtd3Ifw/Nq2Xbdadd/LZXdo2lscDgephBwc1t31Y9N89k36O0/z+U8sy9tUQg76idrU9cv7YmGicnf6Rm1D2K+r6ialyM3x11eWIYUAAAAAAAAAAAAAAOCMFcUvKERCKs/YI5gAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a24">スーセントリマー (24)</a><br />
+攻撃力上昇　★★★★★★　難易度‐普通‐<br />
+レジェンド(ミサイル4,シングル4,アーム6)<br />
+ネクスト(レーザー0,ツイン4,アーム3)<br />
+229,634,300 (..X,レジェンド,<a href="locations.html#l167911470">テクノワールド</a>,2014-09-22 15:01:03)<br />
+<a href="unlock_0.html#s24">C道中 > F道中 > MIRAGE CASTLE > 小惑星地帯[緑] > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADcSURBVHhe7dQhTkNBEAbgSiSSI+Ca9r3m1fUlTRNMD1BRUdEGicAvUANINAKJ4wgcAY9BkmAIIRBIxbIlyx025PuSzST7j5vMdAAAAAAAAAAAAAAAAAAAAPhHQr9/FKrqZFvzF6VZ1/XxTdt+3U+n8XY8/j5vmqscUYrQ7e5eNM3L+2IR42oVN8tlTIN6C4PBXm6hBKHXO7hu29ftkP7e3WTykc7gYW6hFGmDHp5ms98hPc/n8XI4fAyj0U6OKUXanv2zuv5MNZ5W1SbVNkcAAAAAAAAAAABQrk7nBxjKPv8d8ooGAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a25">サントセキャリンズ (25)</a><br />
+装備固定　★★★★★　難易度‐普通‐<br />
+外伝(ウェーブ3,マルチ4,アーム3)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム4)<br />
+187,982,350 (STT,外伝,<a href="locations.html#l167918618">高田馬場ゲーセンミカド</a>,2018-02-17 18:35:20)<br />
+<a href="unlock_0.html#s27">C道中 > MUD WHEEL > D派生・途中反転 > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADUSURBVHhe7dYxTkJBEADQfwRLS0s6DAS+PzT0hCAlB4Br/FKttLCi4wL0NiYUhMLCI3gCAz3FukvWOyzJe8lkM5npJrs7FQAAAAAAAAAAAAAAAAAAAAAAcDXabvfmua4/Y3ynM+W5REmehsP1x2Ry/lkswmE2C2lYuUQp2n6/89o0v+flMoTV6hLvo9Gx7fUecgslaAeD+7emOf0PKcVmPD7FAT7mFkrxUtfb3XR6efq+5vMQ80MuUZJ4q27jP7VPy0QaUlwm7nIJAAAAAAAA4FpV1R+wwECLg/NwRQAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a26">ジョンズトセン (26)</a><br />
+１クレジット限定　★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(ウェーブ4,ツイン4,アーム7)<br />
+レジェンド(レーザー4,マルチ4,アーム6)<br />
+204,787,800 (T884,レジェンド,<a href="locations.html#l167911077">アミパラ広島店</a>,2012-06-18 22:28:17)<br />
+<a href="unlock_b.html#s31">HARD WHEEL > MIRAGE CASTLE > BLAZES WHIP > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADdSURBVHhe7dU/SgNBFAfgLS0tLb1BJCGZDSkSCKRbMGUOkJzBbu3814h4ATsrwc5OLMTCwiN4hKSVCONsGM/ggt8Hrxh+r3u8NwUAAAAAAADAv1GPx3t1r3eS6nRXnc5+jmiT8xBu7qfTr+eqio+z2fdlCE85oi3S9hxeleV6u1zGuFrt6nY0WtfdbplbaIO63z+6Hg43v0Nq6m4y2aQTeJxbaIuLEB5eqmr7uVjE9/k8pvdbjmiTtFUHZ4PBa/qrPpohNecwRwAAAAAAAAAAAAAAAAAAAAAAwF8pih9GPT76zC7DoAAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a27">ワリチク (27)</a><br />
+装備固定　★★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(ウェーブ4,ツイン4,アーム5)<br />
+レジェンド(レーザー4,マルチ4,アーム4)<br />
+200,867,920 (AMA-T,フォーミュラ,<a href="locations.html#l167918713">バイパスレジャーランド藤江本館</a>,2014-08-24 18:43:46)<br />
+<a href="unlock_b.html#s128">海底都市[緑]・縦トーテム > HUNGRY GLUTTONS > G派生・デブリ多 > DARK FLAME</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZO5g0HvSaIs/3WhHkwEAAAAAAAAAAAAAAPwpTQhXuzz/aooi3RbFuXurIWJMDjG+vq1WKW23qV2v0z7G92axuBhixqCZTK6fq6rth/RbL8vlqcnzm6GFMeh/zn2MH6fN5mdI57pOh+n02K3Dy6GFsbgLoX4oy8+n+bx9nM2O+xB2Q8TYdKuu7I8IhwQAAAAAAAAAAAAAAAD8A1n2DWhxPbFh/mxRAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a28">ビドンモルラ (28)</a><br />
+全アイテム開放　★★★★★　難易度‐普通‐<br />
+ジェネシス(ミサイル2,シングル2,アーム3)<br />
+フォーミュラ(ミサイル2,シングル0,アーム3)<br />
+248,992,700 (NIKUO,ジェネシス,<a href="locations.html#l167911113">ポート２４幸田店</a>,2016-12-25 21:44:38)<br />
+<a href="unlock_b.html#s6">B派生・左右から翼竜 > GLASSY STARE > T道中 > MASSIVE WHIP > 通路・塊ブロック高速 > HUNGRY GLUTTONS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADRSURBVHhe7dYxSgNBFAbgLT2C18iG2d0ikG0CljYpU4RAsPEMg4UGLaxTeAdvZJtGSWHEwmLdkfEMDvh98BiY97rHD68CAAAAAAAAAAAAAAAAAPhfYl13cTrt05u/KM24oMv7tj3tZ7PjY9edbkO4zi1KEefzs7umeXtfr4dhux0+N5vhoW1fYwjneYQSxMnk4qnvj2lJv/W8WHyMKbvKI5RiF8LLYbX6WVJKVkpYSlpuU4p0QNzU9deYoiHVrmmWuQUAAAAAAAAAAAAA/JGq+gYzpz21yVCmQAAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a29">ワエロトヴィリール (29)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+セカンド(ウェーブ0,ツイン4,アーム6)<br />
+レジェンド(レーザー4,マルチ4,アーム6)<br />
+164,098,100 (SKM,セカンド,<a href="locations.html#l167911411">ロイヤル新橋</a>,2017-06-04 15:44:45)<br />
+<a href="unlock_0.html#s74">SLASH SHELL > 海底都市[茶]・上下回転砲台 > VIOLENT RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADaSURBVHhe7dUxSkNBEADQX3oEj2Apyf9JkUB+SB1SBcwBktrCwm4Fi9jaiZWV4CW0tBILe72AIOkEhXU/rIUHELZ4D4aFmemGma0AAAAAAAD+Cr3ecej3z1KchslkL6cpyXldn9y07efDfB7vZrPv7WBwnUuUIjTN/sVwuPtar2PcbGL3Xo5G7yl/mFsoQTp17dV4/NEN6Tdup9NdqOuj3EIp0kbdPy4W8W21ii/LZdw2zWsuUZK0VQfpX3pKA3vuwtkDAAAAAAAAAAAAAAAAAAAAAAAA/ltV/QCmXz4lANV6ogAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a30">トントロ (30)</a><br />
+ノーミス限定　★★★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム9)<br />
+190,042,400 (OAMNAOKI,レジェンド,<a href="locations.html#l167911076">プレイロットジョイ</a>,2016-03-27 13:52:35)<br />
+<a href="unlock_0.html#s23">B道中 > 惑星上空・短 > LIGHTNING CLAW > D派生・途中反転 > GREAT THING</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADASURBVHhe7daxiQJRFAXQKcEStgNXRAcxEUwGRIwtYGxjNtPNNF22gY2NTDQ0tAQbEDQf4TsDoy34Yc+BGzzuzx48fgIAAAAAAAAAwP9StNutVZruq5y+0/RYzR9NRUyW/f7PbjIpz/N5OM5moV5aUxGLotf7XA8Gt7BYhGd+R6Nr0elkzRNiUC9qMxxeyjy3qNjVp+9vPL4fptOwzTKnL1b1Z6Lodr9eqeamAgAAAAAAAAAAAAAAAAAAAIA3SJIHbFk+5bH0B6EAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a31">ナモナイ (31)</a><br />
+バースト強化　★★★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(ウェーブ4,ツイン4,アーム5)<br />
+レジェンド(レーザー4,マルチ4,アーム4)<br />
+300,350,700 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2017-06-12 00:30:31)<br />
+<a href="unlock_b.html#s84">PHANTOM CASTLE > G派生・弱 > TRIDENT JAW > 宇宙要塞[緑] > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dS7SgNREAbgLX0EH8E22d0sqbIQAjapU6UKCZYWFnbrpQjapA8WtlY+gqUPIdjaKFZeIMJxI8d3OITvg2Hg/NMNczIAAAAAAAAAAAAAYNc0eX5wURSfbQ/neb5pex0jUnJVVY9Pk0kIi0V4mU7DsiyfY0Qqmk7n8Kau37dL+q/70eijvaqjOEIKmrLcv66q16/Z7G9Jm/k8rPr9t+13GEdIxWVRnNzW9ffDeBzuhsOfZa+3jhGpabrd4/aKzto6bQaDvfgMAAAAAAAAAAAAAAAAAJCcLPsFBiE/MDOoBkoAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a32">スベーイノ (32)</a><br />
+２人限定　★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム4)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+263,109,201 (DRK@T884,ネクスト,<a href="locations.html#l167910433">タイトーステーション広島紙屋町</a>,2015-01-20 23:54:08)<br />
+<a href="unlock_b.html#s72">MIRAGE CASTLE > SLASH SHELL > K道中 > TRIDENT JAW > THOUSAND BULLETS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dS/SgNBEAfgKy0tfQS7kNyFS5eDELDJA6RIkSLB0sJ+/dOoZeoUlnY+go9gb2Mp2IiIoqRYN7K+ghz4fbAM7G+6YaYAAAAAAAAAAAAAAAAAAADgHwq93lEoy5NtzV+0zXlVHV83zefdZBJvRqOvi7pe5Yi2CJ3O7mVdP7/N5zEul3GzWMQ0qNfQ7+/lFtogdLsH66Z52Q7p992Ox+/pDB7mFtoibdD943T6M6Sn2SxeDQYPYTjcyTFtkbZn/6yqPlKNp2W5SbXJEQAAAAAAAAAAAPy9ovgGQIQ+/70a0JgAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a33">ハルミトン (33)</a><br />
+攻撃力上昇　★★★★★★★★　難易度‐難関‐<br />
+レジェンド(レーザー0,マルチ4,アーム6)<br />
+ネクスト(ミサイル0,ツイン4,アーム6)<br />
+239,578,580 (HIK,レジェンド,<a href="locations.html#l167911232">ポート２４御津</a>,2013-03-18 19:42:10)<br />
+<a href="unlock_b.html#s104">ワープ・開始時蛇二匹 > D派生・途中反転 > SLASH SHELL > G派生・デブリ多 > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADZSURBVHhe7dQxSkNBEADQX3oEj2ApCf/HkCIhkDLEJkUOkJzB7qdLSgsvIKT2CFqJlVhYWHoEY2WhsI6yegRZ8D0Yht2ZbpipAAAAAAAAAAAA4B9q6/pw0zS3217vIfJ92+0e5RIliQFd381m6XmxSI/zedo2zVMuUYq20zm5GAxe0mqVfuJyNNrHVp3mFkrwdfZio17fl8vfQZ33+/v4P84tlGJT1+vdePx2M52mq8nkI07fLpcoSTscHsSpO4tYf+d45xIAAAAAAAAAAAAAAAAAAAB/q6o+AY3ePxvnj4i/AAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a34">リーバ (34)</a><br />
+装備固定　★★★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,マルチ4,アーム7)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム6)<br />
+146,019,910 (OAMNAOKI,フォーミュラ,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2016-02-20 17:34:20)<br />
+<a href="unlock_0.html#s73">SLASH SHELL > サルガッソー[灰] > GREAT THING</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIKSm4AQfiABRUyArpSLHYyNzBQu9Joy3+dKMdTQYAAAAAAAAAAAAAAPAvNSHc7PL8uymKdF8Ul+6thogxOcT49r5apbTdpna9TvsYP5rF4mqIGYNmMrl9qaq2H9JfvS6X5ybP74YWxqD/OY8xfp43m98hXeo6HabTU7cOr4cWxuIhhPqpLL+e5/P2OJud9iHshoix6VZd2R8RDgkAAAAAAAAAAAAAAAAYsSz7AcRbPbFXVH6LAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a35">クスハリファ (35)</a><br />
+全アイテム開放　★★★★★★★　難易度‐難関‐<br />
+セカンド(ミサイル3,シングル3,アーム4)<br />
+レジェンド(ミサイル0,シングル0,アーム3)<br />
+296,931,070 (HIK,レジェンド,<a href="locations.html#l167911232">ポート２４御津</a>,2014-11-03 22:12:16)<br />
+<a href="unlock_a.html#s26">G道中 > DISASTER JAW > E派生・弱 > GLASSY STARE > 宇宙要塞[緑] > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADSSURBVHhe7dahTgNBEAbgkzwCr9Fr9u5Ek55pgsRUVjRNGgzPsEFAAwJdwTvwRtgaSAUlCMRySxaHRJz4vmSyyc64yZ9MBQAAAAAAAAAAAAAAAADAX2Jdd3E67fNbvhibYUGX92172s9mx8euO92GcF1ajEWcz8/umubtfb1OabtNn5tNemjb1xjCeRlhDOJkcvHU98e8pN96Xiw+hpRdlRHGYhfCy2G1+llSTlZOWE5aaTMW+YC4qeuvIUUp165plqUFAAAAAAAAAAAAAPyzqvoGjvE9tfvHGagAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a36">バークンバー (36)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム9)<br />
+182,282,650 (NON,ネクスト,<a href="locations.html#l167910532">ワンダータワー京都店</a>,2014-02-10 13:54:43)<br />
+<a href="unlock_a.html#s74">洞窟地帯[水]・右移動 > 晴れ・ウニ多 > ASSAULT JAW > 海底都市[紫]・凹みに砲台 > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVHhe7dYxisJQFAXQLMElzA5URIPYCDYBEWsXELcRu3E6bYfZwNRWNlpaugQ3IGgf4ZtAnMpyil+cA7d43N89ePwEAAAAAAAAAADeKdrt1jpND1XOX2l6quaPpiImn4PB9346LS+LRTjN56FeWlMRi6Lf72yGw3tYLsMrP+Pxreh2s+YJMagXtR2NrmWeW1Ts6tP3O5k8jrNZ2GWZ0xer+jNR9Hqrv1RzUwEAAAAAAAAAAAAAAAAAAADAP0qSJ5gjPuX3itk1AAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a37">ボピーロータ (37)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(レーザー4,マルチ4,アーム6)<br />
+ネクスト(ウェーブ4,ツイン4,アーム6)<br />
+200,099,200 (NON,ネクスト,<a href="locations.html#l167910532">ワンダータワー京都店</a>,2012-12-16 14:36:35)<br />
+<a href="unlock_a.html#s75">洞窟地帯[水]・右移動 > 曇り・長 > ASSAULT JAW > 海底都市[緑]・縦トーテム > GREAT THING</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADPSURBVHhe7daxSgNBEADQKy39kyQX7rJFIFcmnT9wgTTpAv7BVgoRtLb1H/I1dlZCUiRoCrszB6tYW23xHiwLM9MNM7sFAAAAAAAAAAAAAAAAwD/FqhrG8bjp7xQiN3E0mm8nk/PzdHp8DOHjvq7blCIXcTa7egjh9b1tu2697j5Xq+7StH0cDK5TCTm4rLubl6Y59U36ObvF4iuW5W0qIQf9RG3r+u2wXJqo3P19o55CON9V1SalyM3vr68sQwoBAAAAAAAAAAAAAEBGiuIbejlCKkUbwXUAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a38">ビリクトア (38)</a><br />
+バースト強化　★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(ウェーブ4,ツイン4,アーム7)<br />
+レジェンド(レーザー4,マルチ4,アーム6)<br />
+216,020,200 (OAMNAOKI,レジェンド,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2014-09-11 22:22:56)<br />
+<a href="unlock_b.html#s45">IRON FOSSIL > LIGHTNING PRISON > BRIGHTLY STARE > DUAL SPIN > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVHhe7dSvTgNBEAfgk0gkj4Br2rvm6npJ0wTTB6ioqGiDROCXPwaQ1RVIHI/AI+AxSBIMIQQCqVi2ZJE4xInvSzaT7G/cZKYAAAAAAAAAAAAAAAAAAACAP4Ve7yiU5cm25i/a5ryqjq+b5vNuMok3o9HXRV2vckRbhE5n97Kun9/m8xiXy7hZLGIa1Gvo9/dyC20Qut2DddO8bIf0+27H4/d0Bg9zC22RNuj+cTr9GdLTbBavBoOHMBzu5Ji2SNuzf1ZVH6nG07LcpNrkCAAAAAAAAAAAAP5PUXwDaD4+/0sq3wMAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a39">フォドラトブーン (39)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+ジェネシス(レーザー4,ツイン4,アーム4)<br />
+フォーミュラ(ミサイル4,ツイン4,アーム3)<br />
+298,124,500 (LIA,ジェネシス,<a href="locations.html#l167911040">タイトーＦステーション南大沢店</a>,2017-02-04 23:42:08)<br />
+<a href="unlock_b.html#s125">洞窟地帯[水]２・左右から編隊 > INSANE STARE > U道中 > BLAZES WHIP > 通路・斜めブロック高速 > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADVSURBVHhe7dYxTkJBEADQfwRLS0o6DAS+PzT0hCAlB4Br/FKttLCi8wL2NiYUhILCI3gCAz3FukvWK5hNfC+ZbCYz3WR3pwIAAAAAAAAAAAAAAAAAAAAAAP6ttte7eqjrjxif6Ux5LlGS+9Fo8z6dnr+Wy7Cfz0MaVi5RinYw6D41zfd5tQphvb7Ey3h8bPv929xCCdrh8Oa5aU6/Q0rxOpmc4gDvcguleKzrt+1sdnn6DotFiPk+lyhJvFXX8Z/apWUiDSkuE51cAgAAAAAAAPgrVfUDhHRAi3Qg6+MAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a40">ジンジョープリス (40)</a><br />
+１クレジット限定　★★★★★★★　難易度‐難関‐<br />
+レジェンド(ウェーブ4,シングル4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム9)<br />
+231,138,400 (NON,ネクスト,<a href="locations.html#l167910532">ワンダータワー京都店</a>,2012-08-25 12:45:43)<br />
+<a href="unlock_b.html#s73">MUD WHEEL > LIGHTNING CLAW > GLASSY STARE > DUAL SPIN > BRUTE GLUTTONS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADZSURBVHhe7dQhTkNBEADQLzkCR0CSNv+XpqJNk8qmmIoeoD0D7te1EsEFSKo5AiiCIggEkiNQFAKSZSALDodY8V4ymezOuMlMBQAAAAAAAAAAAPyprevDTdPcbnu9h8j3bbd7lEuUJAZ0fTebpefFIj3O52nbNE+5RCnaTufkYjB4SatV+onL0WgfW3WaWyjB19mLjXp9Xy5/B3Xe7+/j/zi3UIpNXa934/HbzXSariaTjzh9u1yiJO1weBCn7ixi/Z3jnUsAAAAAAAAAAAAAAAAAAAD8j6r6BLE4PxvueyfEAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a41">レデンリフトク (41)</a><br />
+防御力上昇　★★★★★★　難易度‐普通‐<br />
+外伝(ウェーブ3,マルチ4,アーム3)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム3)<br />
+210,118,100 (MOFFUL,外伝,<a href="locations.html#l167911244">シルクハット本厚木</a>,2015-01-21 17:06:33)<br />
+<a href="unlock_a.html#s79">洞窟地帯[茶]・中型艦多 > 晴れ・ウニ多 > GLASSY STARE > 海底都市[緑]・下側回転砲台 > THOUSAND EDGE</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZM6AJd6TRlv86UY7mgwAAAAAAAAAAAAAAOBfa0K42uX5V1MU6bYozt1bDRFjcojx9W21Smm7Te16nfYxvjeLxcUQMwbNZHL9XFVtP6TfelkuT02e3wwtjEH/c+5j/DhtNj9DOtd1Okynx24dXg4tjMVdCPVDWX4+zeft42x23IewGyLGplt1ZX9EOCQAAAAAAAAAAAAAAADgD2TZNyBUPbG/m+JmAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a42">ルルベビ (42)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+フォーミュラ(レーザー4,ツイン4,アーム9)<br />
+セカンド(ウェーブ4,マルチ4,アーム7)<br />
+216,805,680 (OAMNAOKI,フォーミュラ,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2015-01-02 17:29:11)<br />
+<a href="unlock_a.html#s18">D道中 > ANCIENT BARRAGE > G派生・デブリ多 > DISASTER JAW > GOLDEN RULER</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADZSURBVHhe7dUxSkNBEADQX3oEj2Apyf9JkUB+SB1SBcwBktrCwm4Fi9jaiZWV4CW0tBILe72AIOkEhXU/rI29sMV7MCzMTDfMbAUAAAAAAPC/Qq93HPr9sxSnYTLZy2lKcl7XJzdt+/kwn8e72ex7Oxhc5xKlCE2zfzEc7r7W6xg3m9i9l6PRe8of5hZKkE5dezUef3RD+o3b6XQX6voot1CKtFH3j4tFfFut4styGbdN85pLlCRt1UH6l57SwJ67cPYAAAAAAAAAAAAAAAAAAAAAAACAv6rqBzoCPiWtIlDmAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a43">ホックイロトワ (43)</a><br />
+装備固定　★★★★★　難易度‐普通‐<br />
+アサルト(レーザー4,マルチ4,アーム4)<br />
+ネクスト(ウェーブ4,ツイン4,アーム6)<br />
+247,696,300 (NBUMAX,アサルト,<a href="locations.html#l167918456">シルクハット　蒲田Ｍ２店</a>,2013-05-07 23:40:37)<br />
+<a href="unlock_b.html#s8">B派生・左右から翼竜 > INSANE STARE > T道中 > BLAZES WHIP > 通路・塊ブロック高速 > HUNGRY GLUTTONS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVHhe7dYxisJQFAXQLMElzA5URIPYCDYBEWsXELcRu3E6bYfZwNRWNlpaugQ3IGgf4ZtAnFqY5hfnwC0e93cPHj8BAAAAAAAAAID/KNrt1jpND1XOX2l6quaPpiImn4PB9346LS+LRTjN56FeWlMRi6Lf72yGw3tYLsMrP+Pxreh2s+YJMagXtR2NrmWeW1Ts6tP3O5k8jrNZ2GWZ0xer+jNR9Hqrv1RzUwEAAAAAAAAAAAAAAAAAAADAG5LkCcPtPuX7A6OvAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a44">トハメンシディ (44)</a><br />
+装備固定　★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,マルチ4,アーム7)<br />
+フォーミュラ(ウェーブ4,マルチ4,アーム6)<br />
+275,221,900 (YAICHI,外伝,<a href="locations.html#l167921965">スペースシャトル塩釜口店</a>,2013-06-28 00:36:01)<br />
+<a href="unlock_a.html#s16">D派生・斜め移動 > LIGHTNING CLAW > G派生・デブリ多 > ASSAULT JAW > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADfSURBVHhe7dSrTgNREAbglTwCj4Btd7ebqm7SNKmprqpq2iARCNxyEQ2YeoLAongEJA9BgsVAUFySkhy25GAxmCO+L5lMcv5xkzkZAAAAAAAAAAAAAMDfmjzfOy2K97aHkzzftL2OESk5r6r7h+k0hOUyPM1mYVWWjzEiFU2nM76q69ftkn7rdjR6a69qP46QgqYsdy+q6vljPv9Z0maxCOt+/2X7HcYRUnFWFIfXdf15N5mEm+Hwa9XrXcaI1DTd7kF7RcdtHTWDwU58BgAAAAAAAAAAAAAAAAD4tyz7BkZFPzDqFNvcAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a45">クンモント (45)</a><br />
+装備固定　★★★★★★　難易度‐普通‐<br />
+レジェンド(レーザー4,マルチ4,アーム5)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+267,148,000 (OAMNAOKI,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2014-12-08 22:59:15)<br />
+<a href="unlock_b.html#s124">洞窟地帯[水]２・左右から編隊 > GLASSY STARE > U道中 > MASSIVE WHIP > 通路・斜めブロック高速 > THOUSAND KNIVES</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADcSURBVHhe7dUxSgNBFAbgLS0tLb1BJCGZDSkSCKRbMGUOkJzBbu3U2Ih4ATsrwc5OLMTCwiN4hKSVCOtsGI8gTPF98Irhf93jvSkAAAAAAAAA+Gf1eHxQ93pnsc731ekcpoicXIZw+zCdfr9UVfM0m/2sQ3hOEbmI23N8XZab3XLZNKvVvu5Go03d7ZaphRzU/f7JzXC4/RtSW/eTyTaewNPUQi6uQnh8rard12LRfMznTXy/p4icxK06uhgM3uJf9dkOqT2HKQIAAAAAAAAAAAAAAAAAAAAAAIriF7/DPvprCfnUAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a46">リモーンオルト (46)</a><br />
+防御力上昇　★★★★★★★　難易度‐難関‐<br />
+セカンド(ウェーブ4,マルチ4,アーム0)<br />
+ネクスト(ミサイル4,ツイン4,アーム0)<br />
+212,565,600 (WHM,セカンド,<a href="locations.html#l167911232">ポート２４御津</a>,2017-01-05 15:56:34)<br />
+<a href="unlock_a.html#s75">洞窟地帯[水]・右移動 > 曇り・長 > ASSAULT JAW > 海底都市[緑]・縦トーテム > GREAT THING</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADZSURBVHhe7dQhTkNBEADQLzkCR0CSNv+XpqJNk8qmmIoeoD0D7te1EsEFSKo5AiiCIggEkiNQFAKSZSALEoNZ8V4ymezOuMlMBQAAAAAAAAAAAPxbW9eHm6a53fZ6D5Hv2273KJcoSQzo+m42S8+LRXqcz9O2aZ5yiVK0nc7JxWDwklar9BOXo9E+tuo0t1CCr7MXG/X6vlz+Duq839/H/3FuoRSbul7vxuO3m+k0XU0mH3H6drlESdrh8CBO3VnE+jvHO5cAAAAAAAAAAAAAAAAAAAD4W1V9AtSSPxs+f8OeAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a47">レナジャイ (47)</a><br />
+装備固定　★★★★★★★★　難易度‐難関‐<br />
+レジェンド(レーザー4,マルチ4,アーム3)<br />
+セカンド(ウェーブ0,ツイン4,アーム3)<br />
+226,403,350 (HIK,レジェンド,<a href="locations.html#l167911232">ポート２４御津</a>,2012-08-18 10:50:46)<br />
+<a href="unlock_a.html#s53">LIGHTNING PRISON > INSANE STARE > 海底基地・長 > HEAVY GLUTTONS</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADUSURBVHhe7dYxTsNAEAVQlxyBYxBbu7GiSHGRgjukCCmcazgUkDRIlBTcgANxAAoqZIV0pFhsZHoKChfvSaMt/nSjHU0GAAAAAAAAAAAAAADAHzQhXO3y/KspinRbFOfurYaIMTnE+Pq2WqW03aZ2vU77GN+bxeJiiBmDZjK5fq6qth/Sb70sl6cmz2+GFsag/zn3MX6cNpufIZ3rOh2m02O3Di+HFsbiLoT6oSw/n+bz9nE2O+5D2A0RY9OturI/IhwSAAAAAAAAAAAAAAAA8I+y7Bt8Pj2xANEHlgAAAABJRU5ErkJggg==)"></span></a></div>
+<p>
+<a id="a48">スブレジリ (48)</a><br />
+バースト強化　★★★★★★★★★★　難易度‐極悪‐<br />
+レジェンド(ウェーブ4,シングル4,アーム4)<br />
+ネクスト(ミサイル4,マルチ4,アーム6)<br />
+251,270,250 (OAMNAOKI,ネクスト,<a href="locations.html#l167911446">ディノスパーク札幌中央店</a>,2016-12-12 22:24:19)<br />
+<a href="unlock_b.html#s83">PHANTOM CASTLE > ANCIENT BARRAGE > J道中 > G.T.V</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADASURBVHhe7daxiQJRFAXQKcEStgNXRAcxEUwGRIwtYGxjNtPNNF22gY2NTDQ0tAQbEDQf4TsDoyXIhz0HbvC4P3vw+AkAAAAAAAAAALxD0W63Vmm6r3L6TtNjNX80FTFZ9vs/u8mkPM/n4TibhXppTUUsil7vcz0Y3MJiEZ75HY2uRaeTNU+IQb2ozXB4KfPcomJXn76/8fh+mE7DNsucvljVn4mi2/16pZqbCgAAAAAAAAAAAAAAAAAAAIB/LUke77c+5SE4R3YAAAAASUVORK5CYII=)"></span></a></div>
+<p>
+<a id="a49">ディアレッド (49)</a><br />
+装備固定　★★★★★★★★　難易度‐難関‐<br />
+外伝(ウェーブ3,ツイン4,アーム6)<br />
+ネクスト(ミサイル4,マルチ4,アーム4)<br />
+195,270,260 (T884,ネクスト,<a href="locations.html#l167910433">タイトーステーション広島紙屋町</a>,2018-02-15 22:44:48)<br />
+<a href="unlock_a.html#s42">KNIGHT FOSSIL > ANCIENT BARRAGE > G派生・デブリ多 > DARK FLAME</a><br style="clear: both"></p>
+<hr />
+<div class="map"><a href="#"><span class="map com"></span><span class="map" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABCCAYAAAC/3kPMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADfSURBVHhe7dSrTgNREAbglTwCj4Btd7ebqm7SNKmprqpq2iARCNxyEQ2YeoLAongEJA9BgsVAUFySkhy25CBxiCO+L5lMcv5xkzkZAAAAAAAAAAAAAMD/aPJ877Qo3tseTvJ80/Y6RqTkvKruH6bTEJbL8DSbhVVZPsaIVDSdzviqrl+3S/qt29Horb2q/ThCCpqy3L2oqueP+fxnSZvFIqz7/ZftdxhHSMVZURxe1/Xn3WQSbobDr1WvdxkjUtN0uwftFR23ddQMBjvxGQAAAAAAAAAAAAAAAADgT1n2DWZXPzD36OpRAAAAAElFTkSuQmCC)"></span></a></div>
+<p>
+<a id="a50">ンドンロ (50)</a><br />
+全アイテム開放　★★★★★★★　難易度‐難関‐<br />
+外伝(レーザー2,ツイン4,アーム3)<br />
+ネクスト(ミサイル4,ツイン4,アーム4)<br />
+430,385,600 (ASC,外伝,<a href="locations.html#l167918618">高田馬場ゲーセンミカド</a>,2017-04-16 16:47:31)<br />
+<a href="unlock_a.html#s22">F道中 > PHANTOM CASTLE > D派生・途中反転 > ASSAULT JAW > 宇宙要塞[緑] > BRUTE GLUTTONS</a><br style="clear: both"></p>
+<hr />
+<table border>
+<tr><th>Location</th><th>WTS</th><th>Rate</th></tr>
+<tr><td><a href="locations.html#l167911446">ディノスパーク札幌中央店</a></td><td>15</td><td><div class="bar" style="width:6em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911232">ポート２４御津</a></td><td>7</td><td><div class="bar" style="width:2.8em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167918618">高田馬場ゲーセンミカド</a></td><td>5</td><td><div class="bar" style="width:2em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910532">ワンダータワー京都店</a></td><td>4</td><td><div class="bar" style="width:1.6em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910433">タイトーステーション広島紙屋町</a></td><td>2</td><td><div class="bar" style="width:0.8em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911113">ポート２４幸田店</a></td><td>2</td><td><div class="bar" style="width:0.8em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911077">アミパラ広島店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910405">アムネット五反田２号店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167918711">カレッジ・スクエア</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167918456">シルクハット　蒲田Ｍ２店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911244">シルクハット本厚木</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167921965">スペースシャトル塩釜口店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910391">タイトーステーション梅三小路店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910414">タイトーステーション横浜店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911040">タイトーＦステーション南大沢店</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911470">テクノワールド</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167918713">バイパスレジャーランド藤江本館</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911076">プレイロットジョイ</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911411">ロイヤル新橋</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167910997">Ｈｅｙ</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+<tr><td><a href="locations.html#l167911342">Ｒ４０８</a></td><td>1</td><td><div class="bar" style="width:0.4em;"></div></td>
+</tr>
+</table>
+<div class="spacer"></div>
+<hr />
+<div class="copyright">Copyright &copy; 2018-2019 tomirin</div>
+</body>
+</html>

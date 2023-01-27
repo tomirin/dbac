@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="dbac" />
+	<meta name="description" content="DBAC Analysis" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../default.css" />
+	<title>ランダム ルート選択</title>
+</head>
+<body onload="on_load();">
+<div><a href="index.html">DBAC</a> / ランダム ルート選択</div>
+<hr>
+<div class="last_updated">Last updated on 2023-01-27</div>
+<noscript>
+	<p>JavaScriptを有効にしてください。</p>
+</noscript>
+<form name="form" id="form" onsubmit="on_drift(); return false;" action="#">
+<div>Ship:</div>
+<div id="ship" class="group_box">
+	<label><input type="checkbox" id="Legend" />Legend</label>
+	<label><input type="checkbox" id="Next" />Next</label>
+	<label><input type="checkbox" id="Origin" />Origin</label>
+	<label><input type="checkbox" id="Formula" />Formula</label>
+	<label><input type="checkbox" id="Gaiden" />Gaiden</label>
+	<label><input type="checkbox" id="Second" />Second</label>
+	<label><input type="checkbox" id="Assault" />Assault</label>
+	<label><input type="checkbox" id="Genesis" />Genesis</label>
+</div>
+<div>Mode:</div>
+<div id="mode" class="group_box">
+	<label><input type="checkbox" id="original" />Original</label>
+	<label><input type="checkbox" id="original_ex" />Original EX</label>
+</div>
+<input type="submit" value="次のルートを表示" class="field_item">
+</form>
+<div id="result"></div>
+<hr>
+<div class="copyright">Copyright &copy; 2021 tomirin</div>
+<script>
+function set_result_(str)
+{
+	var node = document.getElementById('result');
+	node.innerHTML = str;
+}
+
+function get_checked_(id)
+{
+	var input = document.getElementById(id);
+	return input.checked;
+}
+
+var all_ships_;
+
+function get_all_ships_()
+{
+	if (!all_ships_) {
+		all_ships_ = ['Legend','Next','Origin','Formula','Gaiden','Second','Assault','Genesis'];
+	}
+	return all_ships_;
+}
+
+function get_checked_ships_()
+{
+	var ships = new Array;
+	{
+		var all = get_all_ships_();
+		for (var i = 0, n = all.length; i < n; ++i) {
+			if (get_checked_(all[i])) {
+				ships.push(all[i]);
+			}
+		}
+	}
+	if (0 == ships.length) {
+		return get_all_ships_();
+	}
+	return ships;
+}
+
+var letters_;
+
+function get_letters_()
+{
+	if (!letters_) {
+		letters_ = ['A','B','C','D','E','F','G','H','I','J','K','L',' ',' ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	}
+	return letters_;
+}
+
+function random_(range)
+{
+  return  Math.floor(Math.random() * range);
+}
+
+function coin_toss_()
+{
+  return random_(2) < 1;
+}
+
+function make_route_()
+{
+	var route = '';
+	{
+		var is_ex = coin_toss_();
+		var normal_only = get_checked_('original');
+		var ex_only = get_checked_('original_ex');
+		if (normal_only != ex_only) {
+			is_ex = ex_only;
+		}
+		var first = ((is_ex) ? 14 : 0) + random_(3);
+		var second = first + 3 + (coin_toss_() ? 1 : 0);
+		var third = second + 4 + (coin_toss_() ? 1 : 0);
+		var letters = get_letters_();
+		route = letters[first] + letters[second] + letters[third];
+	}
+	return route;
+}
+
+function do_drift_()
+{
+	try {
+		set_result_('');
+		var text = '';
+		{
+			var ships = get_checked_ships_();
+			var index = random_(ships.length);
+			var ship = ships[index];
+			var route = make_route_();
+			text += '<div>Route: '+ ship + ' ' + route + '</div>';
+		}
+		set_result_(text);
+	} catch (error) {
+		set_result_('<hr />Error: ' + error);
+	}
+}
+
+function on_drift()
+{
+	setTimeout(do_drift_, 1);
+}
+</script>
+</body>
+</html>
